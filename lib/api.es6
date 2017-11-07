@@ -5,8 +5,9 @@ import domain from "express-domain-middleware";
 import mwAllowCrossDomain from "./middleware_services/mwAllowCrossDomain";
 import {MongoDbService} from "./MongoDB/MongoDbService";
 import {MongoChecker} from "./MongoDB/MongoChecker";
-import {editorService} from "./endpoints/services/editorService";
 import Q from "q";
+import {editorService} from "./endpoints/services/editorService";
+
 
 let config = Object.freeze(require("../config/config")),
     app = express(),
@@ -46,21 +47,13 @@ startMongoDBPolling()
         console.log("================MongoDB Polling Started====================");
         console.log("================MongoDB Polling Started====================");
 
-        let editorServiceObject = new editorService(config, dbService);
-        editorRoute.post(editorServiceObject.storeToDb.bind(editorServiceObject));
-
         // Starts the app
         app.listen(app.get("port"), app.get("domain"), function () {
             console.log("Server has started and is listening on port: " + app.get("port") + " and ip : " +
                 app.get("domain"));
 
-            dbService.getMongoDBObject().then((db) => {
-                editorServiceObject.repository_.insertDocument(db, function() {
-                    console.log("basic inserted");
-                });
-            }).catch(err => {
-                console.log("err : ", err);
-            });
+            let editorServiceObject = new editorService(config, dbService);
+            editorRoute.post(editorServiceObject.storeToDb.bind(editorServiceObject));
         });
     })
     .catch(err => {

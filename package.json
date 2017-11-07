@@ -25,6 +25,7 @@
     "babel-polyfill": "^6.7.4",
     "body-parser": "^1.15.0",
     "deepmerge": "^0.2.10",
+    "diff": "^3.4.0",
     "express": "^4.13.4",
     "express-domain-middleware": "^0.1.0",
     "linebreak": "^0.3.0",
