@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../lib/endpoints/data-repositories/index.es6"],"names":[],"mappings":"AAAA;;;;;;AAEA;;kBAEe;AACb;AADa,C","file":"index.js","sourcesContent":["\"use strict\";\n\nimport {EditorRepository} from \"./EditorRepository\";\n\nexport default {\n  \"EditorRepository\": EditorRepository\n};\n"]}
