@@ -46,12 +46,14 @@ export class EditorRepository {
         });
     }
 
-    static addcharToString(string, index, replace) {
-        return string.substr(0, index) + replace + string.substr(index);
+    static addcharToString(string, sub) {
+        return string + sub;
+        //return string.substr(0, index) + replace + string.substr(index);
     }
 
-    static removecharFromString(string, index) {
-        return string.slice(0, index - 1) + string.slice(index);
+    static removecharFromString(string, sub) {
+        //return string.slice(0, index - 1) + string.slice(index);
+        return string.replace(sub, "");
     }
 
     updatePart(partStore){
@@ -60,15 +62,23 @@ export class EditorRepository {
             let collection = db.collection("content");
             return collection.find({"_id": 1}).snapshot().forEach(function(str) {
                 console.log("str : ", str);
-                partStore.map((partObj, partKey) => {
-                    if(partObj.added){
+                partStore.map((partObj) => {
+                    /*if(partObj.added){
                         str.content = EditorRepository.addcharToString(str.content, partStore[partKey -
                             1].value.length, partObj.value)
+                    }*/
+                    if(partObj.added){
+                        str.content = EditorRepository.addcharToString(str.content, partObj.value)
                     }
-                    if(partObj.removed){
+
+                    /*if(partObj.removed){
                         str.content = EditorRepository.removecharFromString(str.content, partStore[partKey
                         - 1].value.length)
+                    }*/
+                    if(partObj.removed){
+                        str.content = EditorRepository.removecharFromString(str.content, partObj.value)
                     }
+
                 });
 
                 let collection = "content",
